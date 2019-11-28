@@ -30,9 +30,9 @@ def DampedPendulum(g, L, b):
     return system
 
 
-system = DampedPendulum(9.81, 1, 0.1)
+system = DampedPendulum(9.81, 1, 0.4)
 y0 = np.array([np.pi*0.9,0])
-tout, yout = RK4(system, 0.01, [0, 100], y0)
+tout, yout = RK4(system, 0.01, [0, 10], y0)
 
 # animate pendulum
 time = tout
@@ -63,5 +63,7 @@ def animate(i):
 
 
 ani = animation.FuncAnimation(
-    fig, animate, init_func=init, interval=2, blit=True, save_count=50)
+    fig, animate, init_func=init, interval=1, blit=True, save_count=2000, frames=2000, repeat=False)
 plt.show()
+
+ani.save('./pendulum.gif', writer='imagemagick', fps=30)
