@@ -66,4 +66,4 @@ ani = animation.FuncAnimation(
     fig, animate, init_func=init, interval=1, blit=True, save_count=2000, frames=2000, repeat=False)
 plt.show()
 
-ani.save('./pendulum.gif', writer='imagemagick', fps=30)
+# ani.save('./pendulum.gif', writer='imagemagick', fps=30)

@@ -5,16 +5,18 @@ def RK4(f, h, interval, y0):
     a stepsize that determines the distance between estimated points and
     an interval over which the system should be integrated and an
     initial state'''
-    statelen = len(y0) # the length of each state
+    statesize = np.shape(y0) # the shape of each state
     t = np.arange(interval[0], interval[1], h) # time
-    y = np.zeros((statelen, len(t))) # state at each timestep
-    y[:,0] = y0
+    y = np.zeros(statesize) # state at each timestep
+    y = np.expand_dims(y, y.ndim)
+    y = np.repeat(y, len(t), y.ndim-1)
+    y[...,0] = y0
 
     for i in range(len(t)-1):
-        k1 = h * f(t[i],y[:,i])
-        k2 = h * f(t[i] + h/2, y[:,i] + k1/2)
-        k3 = h * f(t[i] + h/2, y[:,i] + k2/2)
-        k4 = h * f(t[i] + h, y[:,i] + k3)
-        y[:,i+1] = y[:,i] + 1/6 * (k1 + 2*k2 + 2*k3 + k4)
+        k1 = h * f(t[i],y[...,i])
+        k2 = h * f(t[i] + h/2, y[...,i] + k1/2)
+        k3 = h * f(t[i] + h/2, y[...,i] + k2/2)
+        k4 = h * f(t[i] + h, y[...,i] + k3)
+        y[...,i+1] = y[...,i] + 1/6 * (k1 + 2*k2 + 2*k3 + k4)
 
     return t, y
